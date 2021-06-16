@@ -1,0 +1,47 @@
+class Solution {
+    public void solve(char[][] board) {
+        //traverse all boundry and make them marked as %
+        int r = board.length ;
+        int c =board[0].length ;
+        
+        //mark rows
+        for(int i = 0 ;i<r;i++){
+            if(board[i][0]=='O'){
+                mark(board,i,0,r,c);
+            }
+            if(board[i][c-1]=='O'){
+                mark(board,i,c-1,r,c);
+            }
+        }
+        //mark cols
+        for(int i = 0 ;i<c;i++){
+            if(board[0][i]=='O'){
+                mark(board,0,i,r,c);
+            }
+            if(board[r-1][i]=='O'){
+                mark(board,r-1,i,r,c);
+            }
+        }
+        //after marking traverse which so ever is 0 make them x and which is $ make it 0
+        for(int i=0;i<r;i++){
+            for(int j=0;j<c;j++){
+                if(board[i][j]=='O')
+                    board[i][j] = 'X' ;
+                if(board[i][j]=='$')
+                    board[i][j] = 'O' ;
+            }
+        }
+    }
+    
+    private void mark(char[][] board,int x,int y,int r, int c){
+        //check for bounries
+        if(x<0 || x>=r || y < 0 || y>=c || board[x][y]=='$' || board[x][y]=='X') return ;
+        //mark it
+        board[x][y] = '$' ;
+        //recur in all four directions
+        mark(board,x+1,y,r,c) ;
+        mark(board,x-1,y,r,c) ;
+        mark(board,x,y+1,r,c) ;
+        mark(board,x,y-1,r,c) ;
+    }
+}
